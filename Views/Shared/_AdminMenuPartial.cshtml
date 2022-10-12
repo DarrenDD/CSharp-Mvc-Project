@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore
+@using SpringOceanTechnologiesIMS.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "admin"))
+{
+    <li class="nav-item dropdown show">
+        <a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown">Admin</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Users</a>
+            <a class="dropdown-item" asp-area="Admin" asp-controller="Centre" asp-action="Index">Centres</a>
+            <a class="dropdown-item" asp-area="Admin" asp-controller="Programme" asp-action="Index">Programmes</a>
+            <a class="dropdown-item" asp-area="Admin" asp-controller="UsersToProgramme" asp-action="Index">Users to Programmes</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" asp-area="Admin" asp-controller="MediaType" asp-action="Index">MediaTypes</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">User to Centres</a>
+            <a class="dropdown-item" href="#">Centres to programmes</a>
+
+
+        </div>
+    </li>
+}
+else if (!SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="#Courses"><i class="fas fa-laptop-code mr-1 text-info"></i>Courses</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="#ContactUs"><i class="fas fa-phone-alt mr-1 text-info"></i>Contact Us</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="#AboutUs"><i class="fas fa-chalkboard-teacher mr-1 text-info"></i>About Us</a>
+    </li>
+}
